@@ -1,5 +1,6 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,6 +45,12 @@ public class TestCourierLogin {
         ValidatableResponse loginResponse = courierClient.login(couriers);
         int statusCode = loginResponse.extract().statusCode();
         assertEquals("Статус код не 404", SC_NOT_FOUND, statusCode);
+    }
+    @After
+    public void deleteCourierTest() {
+        if (courierId > 0) {
+            courierClient.delete(courierId);
+        }
     }
 }
 
